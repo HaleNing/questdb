@@ -120,6 +120,8 @@ public interface CairoConfiguration {
 
     int getDefaultSymbolCapacity();
 
+    boolean getWallEnabledDefault();
+
     int getDoubleToStrCastScale();
 
     int getFileOperationRetryCount();
@@ -141,7 +143,13 @@ public interface CairoConfiguration {
     int getIndexValueBlockSize();
 
     // null input root disables "copy" sql
-    CharSequence getInputRoot();
+    CharSequence getSqlCopyInputRoot();
+
+    CharSequence getSqlCopyInputWorkRoot();
+
+    long getSqlCopyMaxIndexChunkSize();
+
+    int getSqlCopyQueueCapacity();
 
     int getInsertPoolCapacity();
 
@@ -216,6 +224,8 @@ public interface CairoConfiguration {
 
     int getRndFunctionMemoryPageSize();
 
+    int getReplaceFunctionMaxBufferLength();
+
     CharSequence getRoot(); // some folder with suffix env['cairo.root'] e.g. /.../db
 
     default RostiAllocFacade getRostiAllocFacade() {
@@ -223,6 +233,8 @@ public interface CairoConfiguration {
     }
 
     int getSampleByIndexSearchPageSize();
+
+    boolean getSimulateCrashEnabled();
 
     /**
      * Returns database instance id. The instance id is used by the snapshot recovery mechanism:
@@ -235,7 +247,7 @@ public interface CairoConfiguration {
 
     CharSequence getSnapshotRoot(); // same as root/../snapshot
 
-    long getSpinLockTimeoutUs();
+    long getSpinLockTimeout();
 
     int getSqlAnalyticRowIdMaxPages();
 
@@ -306,6 +318,8 @@ public interface CairoConfiguration {
 
     int getSqlMapKeyCapacity();
 
+    int getSqlSmallMapKeyCapacity();
+
     int getSqlMapMaxPages();
 
     int getSqlMapMaxResizes();
@@ -372,4 +386,24 @@ public interface CairoConfiguration {
     boolean isSqlJitDebugEnabled();
 
     boolean isSqlParallelFilterEnabled();
+
+    default IOURingFacade getIOURingFacade() {
+        return IOURingFacadeImpl.INSTANCE;
+    }
+
+    int getSqlCopyLogRetentionDays();
+
+    boolean isIOURingEnabled();
+
+    int getMaxCrashFiles();
+
+    // the '+' is used to prevent overlap with table names
+    default String getOGCrashFilePrefix() {
+        return "hs_err_pid+";
+    }
+
+    // the '+' is used to prevent overlap with table names
+    default String getArchivedCrashFilePrefix() {
+        return "crash+";
+    }
 }

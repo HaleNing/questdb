@@ -35,10 +35,10 @@
         <javac.target>11</javac.target>
         <argLine>-ea -Dfile.encoding=UTF-8</argLine>
         <test.exclude>None</test.exclude>
-        <web.console.version>0.0.1</web.console.version>
+        <web.console.version>0.0.2</web.console.version>
     </properties>
 
-    <version>6.4.2-SNAPSHOT</version>
+    <version>6.5.1-SNAPSHOT</version>
     <groupId>org.questdb</groupId>
     <artifactId>questdb</artifactId>
     <packaging>jar</packaging>
@@ -85,6 +85,7 @@
                 <version>3.8.1</version>
                 <configuration>
                     <compilerArgs>
+                        <arg>${compilerArg0}</arg>
                         <arg>${compilerArg1}</arg>
                         <arg>${compilerArg2}</arg>
                     </compilerArgs>
@@ -218,6 +219,7 @@
                 </executions>
                 <configuration>
                     <additionalJOptions>
+                        <additionalJOption>${compilerArg0}</additionalJOption>
                         <additionalJOption>${compilerArg1}</additionalJOption>
                         <additionalJOption>${compilerArg2}</additionalJOption>
                     </additionalJOptions>
@@ -345,6 +347,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.0.0</version>
                         <configuration>
                             <longModulepath>false</longModulepath>
                         </configuration>
@@ -522,6 +525,7 @@
                 <jdk.version>8</jdk.version>
                 <java.enforce.version>1.8.0_242</java.enforce.version>
                 <questdb.artifactid>questdb-jdk8</questdb.artifactid>
+                <compilerArg0>-XDignore.symbol.file</compilerArg0>
                 <excludePattern1>module-info.java</excludePattern1>
                 <excludeTestPattern1>module-info.java</excludeTestPattern1>
                 <javac.compile.source>1.8</javac.compile.source>
@@ -605,7 +609,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.3.3</version>
+            <version>42.4.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

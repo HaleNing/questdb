@@ -25,6 +25,7 @@
 package io.questdb.log;
 
 import io.questdb.mp.SOCountDownLatch;
+import io.questdb.mp.Sequence;
 import io.questdb.network.NetworkFacade;
 import io.questdb.network.NetworkFacadeImpl;
 import io.questdb.std.Misc;
@@ -502,11 +503,6 @@ public class LogAlertSocketTest {
         }
 
         @Override
-        public boolean isDebugEnabled() {
-            return false;
-        }
-
-        @Override
         public LogRecord xerror() {
             throw new UnsupportedOperationException();
         }
@@ -538,6 +534,11 @@ public class LogAlertSocketTest {
 
         @Override
         public LogRecord xadvisory() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public Sequence getCriticalSequence() {
             throw new UnsupportedOperationException();
         }
     }
@@ -583,6 +584,12 @@ public class LogAlertSocketTest {
         @Override
         public LogRecord $hex(long value) {
             Numbers.appendHex(sink, value, false);
+            return this;
+        }
+
+        @Override
+        public LogRecord $hexPadded(long value) {
+            Numbers.appendHex(sink, value, true);
             return this;
         }
 

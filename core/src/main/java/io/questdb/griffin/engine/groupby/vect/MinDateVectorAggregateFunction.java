@@ -32,6 +32,7 @@ import io.questdb.std.Numbers;
 import io.questdb.std.Rosti;
 import io.questdb.std.Unsafe;
 import io.questdb.std.Vect;
+import io.questdb.std.str.CharSink;
 
 import java.util.concurrent.atomic.LongAccumulator;
 import java.util.function.LongBinaryOperator;
@@ -95,8 +96,8 @@ public class MinDateVectorAggregateFunction extends DateFunction implements Vect
     }
 
     @Override
-    public void merge(long pRostiA, long pRostiB) {
-        Rosti.keyedIntMinLongMerge(pRostiA, pRostiB, valueOffset);
+    public boolean merge(long pRostiA, long pRostiB) {
+        return Rosti.keyedIntMinLongMerge(pRostiA, pRostiB, valueOffset);
     }
 
     @Override
@@ -124,5 +125,10 @@ public class MinDateVectorAggregateFunction extends DateFunction implements Vect
     @Override
     public boolean isReadThreadSafe() {
         return false;
+    }
+
+    @Override
+    public void toSink(CharSink sink) {
+        sink.put("MinDateVector(").put(columnIndex).put(')');
     }
 }
